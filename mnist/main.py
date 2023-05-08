@@ -13,6 +13,7 @@ while(True):
     clock.tick()
     img = sensor.snapshot().binary([(0,64)])
     for obj in tf.classify("trained.tflite", img, min_scale=1.0, scale_mul=0.5, x_overlap=0.0, y_overlap=0.0):
-        img.draw_rectangle(obj.rect())
-        print(obj.output())
+        output = obj.output()
+        number = output.index(max(output))
+        print(number)
     print(clock.fps(), "fps")
