@@ -11,12 +11,14 @@ sensor.set_windowing((240, 240))  # Set 240x240 window.
 sensor.skip_frames(time=2000)  # Let the camera adjust.
 
 model = ml.Model("trained.tflite", load_to_fb=True)
+norm = ml.Normalization(scale=(-1.0, 1.0))
 
 clock = time.clock()
 while True:
     clock.tick()
 
     img = sensor.snapshot()
-    result = model.predict([img])[0].flatten().tolist()
+    input = [norm(img)] # scale 0~255 to -1.0~1.0
+    result = model.predict(input)[0].flatten().tolist()
     print("cat:", result[0], "dog", result[1])
     print(clock.fps(), "fps")
