@@ -21,5 +21,5 @@ while True:
     input = [norm(img)] # scale 0~255 to 0~1.0
     result = model.predict(input)[0].flatten().tolist()
     number = result.index(max(result))
-    print("number", value)
+    print("number", number)
     print(clock.fps(), "fps")
